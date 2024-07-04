@@ -164,5 +164,5 @@ func (c *Controller) UploadCandidatAvatar(ctx *gin.Context) {
 	c.R.UpdateCandidat(&candidat)
 
 	ctx.Header("content-Type", "application/json")
-	ctx.JSON(http.StatusOK, "")
+	ctx.JSON(http.StatusOK, candidat)
 }
