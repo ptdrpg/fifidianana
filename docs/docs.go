@@ -15,7 +15,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/v1/candidat/men": {
+        "/candidat/men": {
             "get": {
                 "description": "find all men candidat",
                 "consumes": [
@@ -32,7 +32,62 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/controller.DataAllMenLists"
+                            "$ref": "#/definitions/controller.DataLists"
+                        }
+                    }
+                }
+            }
+        },
+        "/candidat/woman": {
+            "get": {
+                "description": "find some specific candidat",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "candidat"
+                ],
+                "summary": "find specific candidat",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.ByNum"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "find some specific candidat",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "candidat"
+                ],
+                "summary": "find specific candidat",
+                "parameters": [
+                    {
+                        "description": " ",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controller.CandidatInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/controller.Createresponse"
                         }
                     }
                 }
@@ -40,10 +95,55 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "controller.DataAllMenLists": {
+        "controller.ByNum": {
             "type": "object",
             "properties": {
-                "mens": {
+                "data": {
+                    "$ref": "#/definitions/entity.Candidat"
+                }
+            }
+        },
+        "controller.CandidatInput": {
+            "type": "object",
+            "properties": {
+                "gender": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "num": {
+                    "type": "integer"
+                }
+            }
+        },
+        "controller.Createresponse": {
+            "type": "object",
+            "properties": {
+                "avatar": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "num": {
+                    "type": "integer"
+                },
+                "vote_number": {
+                    "type": "integer"
+                }
+            }
+        },
+        "controller.DataLists": {
+            "type": "object",
+            "properties": {
+                "data": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/entity.Candidat"
@@ -60,13 +160,13 @@ const docTemplate = `{
                 "gender": {
                     "type": "string"
                 },
+                "id": {
+                    "type": "integer"
+                },
                 "name": {
                     "type": "string"
                 },
                 "num": {
-                    "type": "integer"
-                },
-                "uid": {
                     "type": "integer"
                 },
                 "vote_number": {

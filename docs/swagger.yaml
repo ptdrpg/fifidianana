@@ -1,7 +1,36 @@
 definitions:
-  controller.DataAllMenLists:
+  controller.ByNum:
     properties:
-      mens:
+      data:
+        $ref: '#/definitions/entity.Candidat'
+    type: object
+  controller.CandidatInput:
+    properties:
+      gender:
+        type: string
+      name:
+        type: string
+      num:
+        type: integer
+    type: object
+  controller.Createresponse:
+    properties:
+      avatar:
+        type: string
+      gender:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      num:
+        type: integer
+      vote_number:
+        type: integer
+    type: object
+  controller.DataLists:
+    properties:
+      data:
         items:
           $ref: '#/definitions/entity.Candidat'
         type: array
@@ -12,11 +41,11 @@ definitions:
         type: string
       gender:
         type: string
+      id:
+        type: integer
       name:
         type: string
       num:
-        type: integer
-      uid:
         type: integer
       vote_number:
         type: integer
@@ -24,7 +53,7 @@ definitions:
 info:
   contact: {}
 paths:
-  /api/v1/candidat/men:
+  /candidat/men:
     get:
       consumes:
       - application/json
@@ -35,8 +64,44 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/controller.DataAllMenLists'
+            $ref: '#/definitions/controller.DataLists'
       summary: find all men
+      tags:
+      - candidat
+  /candidat/woman:
+    get:
+      consumes:
+      - application/json
+      description: find some specific candidat
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.ByNum'
+      summary: find specific candidat
+      tags:
+      - candidat
+    post:
+      consumes:
+      - application/json
+      description: find some specific candidat
+      parameters:
+      - description: ' '
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/controller.CandidatInput'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/controller.Createresponse'
+      summary: find specific candidat
       tags:
       - candidat
 swagger: "2.0"

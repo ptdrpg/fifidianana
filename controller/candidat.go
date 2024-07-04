@@ -101,8 +101,9 @@ func (c *Controller) FindCandidatByNum(ctx *gin.Context) {
 }
 
 type CandidatInput struct {
-	Num  int    `json:"num"`
-	Name string `json:"name"`
+	Num    int    `json:"num"`
+	Name   string `json:"name"`
+	Gender string `json:"gender"`
 }
 
 type Createresponse struct {
