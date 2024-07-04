@@ -155,7 +155,6 @@ func (c *Controller) CreateCandidat(ctx *gin.Context) {
 // @Tags candidat
 // @Accept json
 // @Produce json
-// @Param body body Createresponse true " "
 // @Success 200 {object} Createresponse
 // @Router /candidat/:id [update]
 func (c *Controller) UpdateCandidat(ctx *gin.Context) {
