@@ -83,7 +83,7 @@ func (c *Controller) FindAllWoman(ctx *gin.Context) {
 // @Accept json
 // @Produce json
 // @Success 200 {object} ByNum
-// @Router /candidat/woman [get]
+// @Router /candidat/:id [get]
 func (c *Controller) FindCandidatByNum(ctx *gin.Context) {
 	getId := ctx.Param("id")
 	id, _ := strconv.Atoi(getId)
@@ -115,15 +115,15 @@ type Createresponse struct {
 	VoteNumber int    `json:"vote_number"`
 }
 
-// @Summary find specific candidat
+// @Summary create candidat
 // @Schemes
-// @Description find some specific candidat
+// @Description create candidat
 // @Tags candidat
 // @Accept json
 // @Produce json
 // @Param body body CandidatInput true " "
 // @Success 201 {object} Createresponse
-// @Router /candidat/woman [post]
+// @Router /candidat [post]
 func (c *Controller) CreateCandidat(ctx *gin.Context) {
 	var input CandidatInput
 	var candidat entity.Candidat
@@ -149,6 +149,15 @@ func (c *Controller) CreateCandidat(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, candidat)
 }
 
+// @Summary update specific candidat
+// @Schemes
+// @Description update some specific candidat
+// @Tags candidat
+// @Accept json
+// @Produce json
+// @Param body body Createresponse true " "
+// @Success 200 {object} Createresponse
+// @Router /candidat/:id [update]
 func (c *Controller) UpdateCandidat(ctx *gin.Context) {
 	getId := ctx.Param("id")
 	id, _ := strconv.Atoi(getId)
@@ -188,6 +197,15 @@ func (c *Controller) DeleteCandidat(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, "candidat succefuly deleted")
 }
 
+// @Summary create candidat
+// @Schemes
+// @Description create candidat
+// @Tags candidat
+// @Accept json
+// @Produce json
+// @Param body body CandidatInput true " "
+// @Success 201 {object} Createresponse
+// @Router /candidat [post]
 func (c *Controller) UploadCandidatAvatar(ctx *gin.Context) {
 	candidatId := ctx.Param("id")
 	id, _ := strconv.Atoi(candidatId)
