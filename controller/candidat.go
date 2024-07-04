@@ -6,6 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/ptdrpg/efidy/entity"
+	"github.com/ptdrpg/efidy/lib"
 )
 
 func (c *Controller) FindAllCandidat(ctx *gin.Context) {
@@ -23,7 +24,7 @@ func (c *Controller) FindAllCandidat(ctx *gin.Context) {
 
 func (c *Controller) FindAllMen(ctx *gin.Context) {
 	var allMen []entity.Candidat
-	allcandidat, _:= c.R.FindAllCandidat()
+	allcandidat, _ := c.R.FindAllCandidat()
 	for i := 0; i < len(allcandidat); i++ {
 		if allcandidat[i].Gender == "H" || allcandidat[i].Gender == "h" {
 			allMen = append(allMen, allcandidat[i])
@@ -36,7 +37,7 @@ func (c *Controller) FindAllMen(ctx *gin.Context) {
 
 func (c *Controller) FindAllWoman(ctx *gin.Context) {
 	var allWoman []entity.Candidat
-	allcandidat, _:= c.R.FindAllCandidat()
+	allcandidat, _ := c.R.FindAllCandidat()
 	for i := 0; i < len(allcandidat); i++ {
 		if allcandidat[i].Gender == "F" || allcandidat[i].Gender == "f" {
 			allWoman = append(allWoman, allcandidat[i])
@@ -130,4 +131,38 @@ func (c *Controller) DeleteCandidat(ctx *gin.Context) {
 
 	ctx.Header("content-Type", "application/json")
 	ctx.JSON(http.StatusOK, "candidat succefuly deleted")
+}
+
+func (c *Controller) UploadCandidatAvatar(ctx *gin.Context) {
+	candidatId := ctx.Param("id")
+	id, _ := strconv.Atoi(candidatId)
+
+	avatar, err := ctx.FormFile("picture")
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"message": err.Error(),
+		})
+		return
+	}
+	path, pathErr := lib.CreateImage(avatar, ctx)
+	if pathErr != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"message": pathErr.Error(),
+		})
+		return
+	}
+
+	candidat, getCandidat := c.R.FindCandidatBynum(id)
+	if getCandidat != nil {
+		ctx.JSON(http.StatusNotFound, gin.H{
+			"erro": getCandidat.Error(),
+		})
+		return
+	}
+
+	candidat.Avatar = path
+	c.R.UpdateCandidat(&candidat)
+
+	ctx.Header("content-Type", "application/json")
+	ctx.JSON(http.StatusOK, "")
 }

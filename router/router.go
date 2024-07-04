@@ -18,6 +18,8 @@ func NewRouter(r *gin.Engine, c *controller.Controller) *Router {
 }
 
 func (r *Router) RegisterRouter() {
+	r.R.Static("/upload", "./image")
+
 	apiR := r.R.Group("/api")
 	v1 := apiR.Group("/v1")
 
@@ -27,6 +29,7 @@ func (r *Router) RegisterRouter() {
 	cr.GET("/men", r.C.FindAllMen)
 	cr.GET("/women", r.C.FindAllWoman)
 	cr.POST("/", r.C.CreateCandidat)
+	cr.POST("/avatar/:id", r.C.UploadCandidatAvatar)
 	cr.PUT("/:id", r.C.UpdateCandidat)
 	cr.DELETE("/:id", r.C.DeleteCandidat)
 
