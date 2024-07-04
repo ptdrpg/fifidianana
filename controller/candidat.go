@@ -48,11 +48,11 @@ func (c *Controller) FindAllWoman(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, allWoman)
 }
 
-func (c *Controller) FindCandidatById(ctx *gin.Context) {
+func (c *Controller) FindCandidatByNum(ctx *gin.Context) {
 	getId := ctx.Param("id")
 	id, _ := strconv.Atoi(getId)
 
-	candidat, err := c.R.FindCandidatById(id)
+	candidat, err := c.R.FindCandidatBynum(id)
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, gin.H{
 			"error": err.Error(),
