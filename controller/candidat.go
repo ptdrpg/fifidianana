@@ -22,6 +22,22 @@ func (c *Controller) FindAllCandidat(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, candidats)
 }
 
+type DataLists struct {
+	Data []entity.Candidat `json:"data"`
+}
+
+type ByNum struct {
+	Data entity.Candidat `json:"data"`
+}
+
+// @Summary find all men
+// @Schemes
+// @Description find all men candidat
+// @Tags candidat
+// @Accept json
+// @Produce json
+// @Success 200 {object} DataLists
+// @Router /candidat/men [get]
 func (c *Controller) FindAllMen(ctx *gin.Context) {
 	var allMen []entity.Candidat
 	allcandidat, _ := c.R.FindAllCandidat()
@@ -32,9 +48,19 @@ func (c *Controller) FindAllMen(ctx *gin.Context) {
 	}
 
 	ctx.Header("content-Type", "application/json")
-	ctx.JSON(http.StatusOK, allMen)
+	ctx.JSON(http.StatusOK, gin.H{
+		"data": allMen,
+	})
 }
 
+// @Summary find all women
+// @Schemes
+// @Description find all woman candidat
+// @Tags candidat
+// @Accept json
+// @Produce json
+// @Success 200 {object} DataLists
+// @Router /candidat/woman [get]
 func (c *Controller) FindAllWoman(ctx *gin.Context) {
 	var allWoman []entity.Candidat
 	allcandidat, _ := c.R.FindAllCandidat()
@@ -45,9 +71,19 @@ func (c *Controller) FindAllWoman(ctx *gin.Context) {
 	}
 
 	ctx.Header("content-Type", "application/json")
-	ctx.JSON(http.StatusOK, allWoman)
+	ctx.JSON(http.StatusOK, gin.H{
+		"data": allWoman,
+	})
 }
 
+// @Summary find specific candidat
+// @Schemes
+// @Description find some specific candidat
+// @Tags candidat
+// @Accept json
+// @Produce json
+// @Success 200 {object} ByNum
+// @Router /candidat/woman [get]
 func (c *Controller) FindCandidatByNum(ctx *gin.Context) {
 	getId := ctx.Param("id")
 	id, _ := strconv.Atoi(getId)
@@ -69,6 +105,24 @@ type CandidatInput struct {
 	Name string `json:"name"`
 }
 
+type Createresponse struct {
+	ID         uint   `json:"id"`
+	Num        int    `json:"num"`
+	Name       string `json:"name"`
+	Avatar     string `json:"avatar"`
+	Gender     string `json:"gender"`
+	VoteNumber int    `json:"vote_number"`
+}
+
+// @Summary find specific candidat
+// @Schemes
+// @Description find some specific candidat
+// @Tags candidat
+// @Accept json
+// @Produce json
+// @Param body body CandidatInput true " "
+// @Success 201 {object} Createresponse
+// @Router /candidat/woman [post]
 func (c *Controller) CreateCandidat(ctx *gin.Context) {
 	var input CandidatInput
 	var candidat entity.Candidat

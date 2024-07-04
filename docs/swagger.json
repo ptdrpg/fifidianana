@@ -1,0 +1,67 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/api/v1/candidat/men": {
+            "get": {
+                "description": "find all men candidat",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "candidat"
+                ],
+                "summary": "find all men",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.DataAllMenLists"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "controller.DataAllMenLists": {
+            "type": "object",
+            "properties": {
+                "mens": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/entity.Candidat"
+                    }
+                }
+            }
+        },
+        "entity.Candidat": {
+            "type": "object",
+            "properties": {
+                "avatar": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "num": {
+                    "type": "integer"
+                },
+                "uid": {
+                    "type": "integer"
+                },
+                "vote_number": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}

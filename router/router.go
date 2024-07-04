@@ -5,6 +5,10 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/ptdrpg/efidy/controller"
+	docs "github.com/ptdrpg/efidy/docs"
+	swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
+	//  "net/http"
 )
 
 type Router struct {
@@ -39,6 +43,8 @@ func CORSMiddleware() gin.HandlerFunc {
 func (r *Router) RegisterRouter() {
 	r.R.Static("/upload", "./image")
 	r.R.Use(CORSMiddleware())
+	docs.SwaggerInfo.BasePath = "/api/v1"
+	r.R.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 
 	apiR := r.R.Group("/api")
 	v1 := apiR.Group("/v1")
@@ -55,7 +61,7 @@ func (r *Router) RegisterRouter() {
 
 	br := v1.Group("/bulletin")
 	br.GET("/", r.C.FindAllBulletin)
-	br.GET("/", r.C.FindBulletinByNum)
+	br.GET("/:id", r.C.FindBulletinByNum)
 	br.POST("/", r.C.SaveBulletin)
 
 }

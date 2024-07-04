@@ -1,7 +1,7 @@
 package entity
 
 type Bulletin struct {
-	ID          uint   `gorm:"primary_key" json:"uid"`
+	ID          uint   `gorm:"primary_key" json:"id"`
 	Operateur   string `json:"operateur"`
 	NumBulletin int    `json:"num_bulletin"`
 	CreatedAt   string `json:"created_at"`

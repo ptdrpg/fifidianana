@@ -1,0 +1,42 @@
+definitions:
+  controller.DataAllMenLists:
+    properties:
+      mens:
+        items:
+          $ref: '#/definitions/entity.Candidat'
+        type: array
+    type: object
+  entity.Candidat:
+    properties:
+      avatar:
+        type: string
+      gender:
+        type: string
+      name:
+        type: string
+      num:
+        type: integer
+      uid:
+        type: integer
+      vote_number:
+        type: integer
+    type: object
+info:
+  contact: {}
+paths:
+  /api/v1/candidat/men:
+    get:
+      consumes:
+      - application/json
+      description: find all men candidat
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.DataAllMenLists'
+      summary: find all men
+      tags:
+      - candidat
+swagger: "2.0"
